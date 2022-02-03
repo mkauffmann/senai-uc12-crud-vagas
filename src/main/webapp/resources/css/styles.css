@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.info {
+	color : blue;
+}
+
+.sucesso {
+	color : green;
+	font-weight : bold;
+}
