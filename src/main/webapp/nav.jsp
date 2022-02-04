@@ -18,9 +18,9 @@
             Listar Vagas
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="<c:url value='/all'/>">Lista de Vagas Abertas</a></li>
-            <li><a class="dropdown-item" href="<c:url value='/all'/>">Lista de Vagas Encerradas</a></li>
-            <li><a class="dropdown-item" href="<c:url value='/vagas/all'/>">Lista Geral de Vagas</a></li>
+            <li><a class="dropdown-item" href="<c:url value='/open'/>">Lista de Vagas Abertas</a></li>
+            <li><a class="dropdown-item" href="<c:url value='/closed'/>">Lista de Vagas Encerradas</a></li>
+            <li><a class="dropdown-item" href="<c:url value='/all'/>">Lista Geral de Vagas</a></li>
           </ul>
         </li>
       </ul>

@@ -45,19 +45,27 @@ public class VagasServlet extends HttpServlet {
 			listAll(request, response);
 			break;
 			
-		case "/change":
-			showChange(request, response);
+		case "/closed":
+			listClosed(request, response);
 			break;
 			
-		case "/add":
-			doPost(request, response);
+		case "/open":
+			listOpen(request, response);
+			break;
+			
+		case "/change":
+			showChange(request, response);
 			break;
 			
 		case "/excluir": 
 			delete(request, response);
 			break;
-			
 		
+		case "/alterar":
+			mostrarAlterar(request, response);
+			break;
+		
+			
 		default:
 			response.sendRedirect(request.getContextPath() + "/emp_010.jsp");
 		}
@@ -69,8 +77,15 @@ public class VagasServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getServletPath();
+		Vaga vaga = null;
 		
-		Vaga vaga = service.adicionar(request, response);
+		if (action.equals("/add")) {
+			vaga = service.adicionar(request, response);
+		} else if (action.equals("/update")){
+			vaga = service.alterar(request, response);
+		}
+
 		
 		if(vaga != null) {
 			request.setAttribute("vaga", vaga);
@@ -79,8 +94,23 @@ public class VagasServlet extends HttpServlet {
 		
 	}
 	
+
 	private void listAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Vaga> lista = service.listarVagas();
+		request.setAttribute("vagas", lista);
+		request.setAttribute("tipo", 1);
+		request.getRequestDispatcher("/emp_030.jsp").forward(request, response);
+	}
+	
+	private void listOpen(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Vaga> lista = service.listarVagas(true);
+		request.setAttribute("vagas", lista);
+		request.setAttribute("tipo", 1);
+		request.getRequestDispatcher("/emp_030.jsp").forward(request, response);
+	}
+	
+	private void listClosed(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Vaga> lista = service.listarVagas(false);
 		request.setAttribute("vagas", lista);
 		request.setAttribute("tipo", 1);
 		request.getRequestDispatcher("/emp_030.jsp").forward(request, response);
@@ -103,5 +133,14 @@ public class VagasServlet extends HttpServlet {
 		request.setAttribute("tipo", 4);
 		request.getRequestDispatcher("/emp_030.jsp").forward(request, response);
 	}
-
+	
+	private void mostrarAlterar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		Integer id = Integer.parseInt(request.getParameter("id"));
+		
+		Vaga vaga = this.service.buscarVaga(id);
+		request.setAttribute("vaga", vaga);
+		request.setAttribute("update", true);
+		
+		request.getRequestDispatcher("/emp_010.jsp").forward(request, response);
+	}
 }

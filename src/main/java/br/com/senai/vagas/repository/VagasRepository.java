@@ -57,6 +57,74 @@ public class VagasRepository {
 
 	}
 	
+	public Vaga buscarVaga(Integer id) {
+		Connection conn = this.bd.getConnection();
+		
+		PreparedStatement sql;
+		try {
+			sql = conn.prepareStatement("select * from vagas where idvagas = ?");
+			sql.setInt(1, id);
+			
+			ResultSet result = sql.executeQuery();
+			
+			Vaga vaga = null;
+			while (result.next()) {
+				vaga = converterVaga(result);
+			}
+			
+			sql.close();
+			conn.close();
+			
+			return vaga;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public Integer atualizarVaga(Vaga atualizaVaga) {
+		Connection conn = this.bd.getConnection();
+		
+		PreparedStatement sql;
+		try {
+			sql = conn.prepareStatement("update vagas set descricao = ?, req_obrigatorios = ?, " +
+					"req_desejaveis = ?, remuneracao = ?, aberta = ?, beneficios = ?, " + 
+					"local_trabalho = ? where idvagas = ?");
+			
+
+			sql.setString(1, atualizaVaga.getDescricao());
+			sql.setString(2, atualizaVaga.getReqObrigatorios());
+			
+			if (atualizaVaga.getReqDesejaveis() != null) {
+				sql.setString(3, atualizaVaga.getReqDesejaveis());
+			} else {
+				sql.setString(3, null);
+			}
+			
+			sql.setFloat(4, atualizaVaga.getRemuneracao());
+			sql.setBoolean(5, atualizaVaga.getAberta());
+			sql.setString(6, atualizaVaga.getBeneficios());
+			sql.setString(7, atualizaVaga.getLocal());
+			
+			sql.setInt(8, atualizaVaga.getId());
+		
+			Integer update = sql.executeUpdate();
+
+			sql.close();
+			conn.close();
+			
+			return update;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	public List<Vaga> listarVagas(){
 		Connection conn = this.bd.getConnection();
 		
@@ -64,6 +132,31 @@ public class VagasRepository {
 		
 		try {
 			sql = conn.prepareStatement("select * from vagas");
+			ResultSet result = sql.executeQuery();
+			
+			List<Vaga> vagas = criarLista(result);
+			
+			sql.close();
+			conn.close();
+			
+			return vagas;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public List<Vaga> listarVagas(Boolean aberta){
+		Connection conn = this.bd.getConnection();
+		
+		PreparedStatement sql;
+		
+		try {
+			sql = conn.prepareStatement("select * from vagas where aberta = ?");
+			sql.setBoolean(1, aberta);
+			
 			ResultSet result = sql.executeQuery();
 			
 			List<Vaga> vagas = criarLista(result);
@@ -103,25 +196,12 @@ public class VagasRepository {
 		return result;
 	}
 	
-	public List<Vaga> criarLista(ResultSet r){
+	private List<Vaga> criarLista(ResultSet r){
 		try {
 			List<Vaga> vagas = new ArrayList<Vaga>();
 			
 			while(r.next()) {
-				Vaga vaga = new Vaga();
-				
-				vaga.setId(r.getInt("idvagas"));
-				vaga.setDescricao(r.getString("descricao"));
-				vaga.setReqObrigatorios(r.getString("req_obrigatorios"));
-				
-				if(r.getString("req_desejaveis") != null) {
-					vaga.setReqDesejaveis(r.getString("req_desejaveis"));
-				}
-				
-				vaga.setRemuneracao(r.getFloat("remuneracao"));
-				vaga.setAberta(r.getBoolean("aberta"));
-				vaga.setBeneficios(r.getString("beneficios"));
-				vaga.setLocal(r.getString("local_trabalho"));
+				Vaga vaga = converterVaga(r);
 				
 				vagas.add(vaga);
 			}
@@ -131,6 +211,31 @@ public class VagasRepository {
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	private Vaga converterVaga(ResultSet r) {
+		try{
+			Vaga vaga = new Vaga();
+			
+			vaga.setId(r.getInt("idvagas"));
+			vaga.setDescricao(r.getString("descricao"));
+			vaga.setReqObrigatorios(r.getString("req_obrigatorios"));
+			
+			if(r.getString("req_desejaveis") != null) {
+				vaga.setReqDesejaveis(r.getString("req_desejaveis"));
+			}
+			
+			vaga.setRemuneracao(r.getFloat("remuneracao"));
+			vaga.setAberta(r.getBoolean("aberta"));
+			vaga.setBeneficios(r.getString("beneficios"));
+			vaga.setLocal(r.getString("local_trabalho"));
+			
+			return vaga;
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		

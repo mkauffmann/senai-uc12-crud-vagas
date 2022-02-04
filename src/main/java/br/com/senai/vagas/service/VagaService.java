@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,6 +34,22 @@ public class VagaService {
 		return this.repository.listarVagas();
 	}
 	
+	public List<Vaga> listarVagas(Boolean aberta){
+		return this.repository.listarVagas(aberta);
+	}
+	
+	public Vaga alterar(HttpServletRequest request, HttpServletResponse response) {
+		Vaga alterarVaga = criarVaga(request);
+		if(repository.atualizarVaga(alterarVaga).equals(1)) {
+			return alterarVaga;
+		}
+		return null;
+	}
+	
+	public Vaga buscarVaga(Integer id) {
+		return this.repository.buscarVaga(id);
+	}
+	
 	public boolean deletarVaga(Integer id) {
 		return this.repository.deletarVaga(id);
 	}
@@ -60,6 +77,15 @@ public class VagaService {
 		
 		if(reqDesejaveis != null) {
 			vaga.setReqDesejaveis(reqDesejaveis);
+		}
+		
+		if(request.getParameter("id") != null) {
+			Integer id = Integer.parseInt(request.getParameter("id"));
+			vaga.setId(id);
+		}
+		if(request.getParameter("aberta") != null) {
+			aberta = Boolean.parseBoolean(request.getParameter("aberta"));
+			vaga.setAberta(aberta);
 		}
 		
 		return vaga;

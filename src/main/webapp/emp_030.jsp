@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<title>Sistema de vagas - Inclus√£o</title>
+<title>Sistema de vagas - Inclus„o</title>
 </head>
 <body>
 <jsp:include page="/nav.jsp" />
@@ -23,19 +23,19 @@
 			<h2>Lista de Vagas de Emprego Abertas</h2>
 		</c:when>
 		<c:when test="${tipo == 4 }">
-			<h2>Lista de Vagas de Emprego para Altera√ß√£o/Exclus√£o</h2>
+			<h2>Lista de Vagas de Emprego para AlteraÁ„o/Exclus„o</h2>
 		</c:when>
 	</c:choose>
 	<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>ID</th>
-			<th>Descri√ß√£o</th>
-			<th>Req. Obrigat√≥rios</th>
-			<th>Req. Desej√°veis</th>
-			<th>Remunera√ß√£o</th>
+			<th>DescriÁ„o</th>
+			<th>Req. ObrigatÛrios</th>
+			<th>Req. Desej·veis</th>
+			<th>RemuneraÁ„o</th>
 			<th>Aberta</th>
-			<th>Benef√≠cios</th>
+			<th>BenefÌcios</th>
 			<th>Local de Trabalho</th>
 			<c:if test="${tipo == 4 }">
 				<th>Alterar</th>
@@ -61,7 +61,7 @@
 							<c:out value="Sim"/>
 						</c:when>
 						<c:otherwise>
-							<c:out value="N√£o"/>
+							<c:out value="N„o"/>
 						</c:otherwise>
 					</c:choose>
 				</td>
@@ -69,7 +69,7 @@
 				<td><c:out value="${ vaga.local}"/></td>
 				<c:if test="${tipo == 4 }">
 					<td><a href="<c:url value='/alterar?id=${vaga.id}'/>">Alterar</a></td>
-					<td><a href="<c:url value='/excluir?id=${vaga.id}'/>">Excluir</a></td>
+					<td><a href="<c:url value='/excluir?id=${vaga.id}'/>" onclick="confirmarExclusao()">Excluir</a></td>
 				</c:if>
 			</tr>
 		</c:forEach>
@@ -79,5 +79,12 @@
 	
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script>
+	function confirmarExclusao(){
+		if(!window.confirm("VocÍ tem certeza que deseja excluir esta vaga?")){
+			event.preventDefault();
+		}
+	}
+</script>
 </body>
 </html>
