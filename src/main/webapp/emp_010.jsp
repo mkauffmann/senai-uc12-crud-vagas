@@ -5,38 +5,11 @@
 <html>
 <head>
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.1.3/css/bootstrap.css'/>">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <title>Sistema de vagas - Inclusão</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="<c:url value='index.jsp'/>">Sistema de Controle de Vagas de Emprego</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<c:url value='emp_010.jsp'/>">Cadastrar</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<c:url value='emp_020.jsp'/>">Alteração/Exclusão</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Listar Vagas
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="<c:url value='emp_030.jsp'/>">Lista de Vagas Abertas</a></li>
-            <li><a class="dropdown-item" href="<c:url value='emp_030.jsp'/>">Lista de Vagas Encerradas</a></li>
-            <li><a class="dropdown-item" href="<c:url value='/all'/>">Lista Geral de Vagas</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<jsp:include page="/nav.jsp" />
 <div class="container">
 	<div class="text-center mt-3">
 		<h1>Sistema de controle de Vagas de Emprego</h1>
@@ -80,6 +53,6 @@
 	
 	
 	
-	<script src="<c:url value='/webjars/bootstrap/5.1.3/js/bootstrap.js'/>"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
